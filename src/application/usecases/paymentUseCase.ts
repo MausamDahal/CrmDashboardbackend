@@ -3,27 +3,29 @@ import { Payment } from "../../domain/types/payment";
 import { v4 as uuidv4 } from "uuid";
 
 export class PaymentUseCase {
-    constructor(private repository: PaymentRepository) { }
+    constructor(private repository: PaymentRepository) {}
 
     async savePayment(subdomain: string, payload: Payment): Promise<void> {
         const { associations, customFields } = payload;
 
-        if (!associations?.id && !associations?.email) {
-            throw new Error("You must provide at least id or email for association");
+        const hasValidAssociation = associations?.id || associations?.email;
+        if (!hasValidAssociation) {
+            throw new Error("At least 'id' or 'email' must be provided in associations");
         }
 
-        const finalPaymentId = associations?.id || uuidv4();
+        const generatedId = associations?.id ?? uuidv4();
 
-        const payment: Payment = {
-            customFields: customFields || {},
+        const paymentData: Payment = {
+            id: generatedId,
             associations,
-            id: finalPaymentId
+            customFields: customFields ?? {},
         };
 
-        await this.repository.savePayment(subdomain, payment);
+        await this.repository.savePayment(subdomain, paymentData);
     }
 
     async getPayments(subdomain: string): Promise<Payment[]> {
-        return await this.repository.getPayments(subdomain);
+        const payments = await this.repository.getPayments(subdomain);
+        return payments ?? [];
     }
 }
