@@ -62,4 +62,15 @@ export class SubscriptionUseCase {
 
         await this.repo.updateStatus(subdomain, currentSub.ID, "canceled");
     }
+    async updateSubscription(subdomain: string, tenantId: string, updateFields: Partial<Subscription>): Promise<void> {
+        const subscriptions = await this.repo.getByTenantId(subdomain, tenantId);
+        const currentSub = subscriptions?.[0];
+        if (!currentSub) throw new Error("No active subscription found to update");
+
+        if (!updateFields.Status) {
+            throw new Error("Status is required to update the subscription");
+        }
+
+        await this.repo.updateStatus(subdomain, currentSub.ID, updateFields.Status);
+    }
 }

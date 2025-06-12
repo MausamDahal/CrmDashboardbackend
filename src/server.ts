@@ -69,13 +69,14 @@ app.use("/api/payment", verifyToken, paymentRoutes);
 app.use("/api/support", verifyToken, supportRoutes);
 app.use("/api/interaction", verifyToken, interactionRoutes);
 app.get('/api/status', verifyToken, (_req: Request, res: Response) => {
-  res.status(200).json({ message: '🟢 API is working fine!' });
+  res.status(200).json({ message: ' API is working fine!' });
 });
+
 
 app.use((_req: Request, res: Response) => {
   res.status(404).json({ error: 'Not Found' });
 });
 
 app.listen(3000, '0.0.0.0', () => {
-  console.log('✅ Backend API server running on port 3000');
+  console.log(' Backend API server running on port 3000');
 });

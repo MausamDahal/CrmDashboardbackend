@@ -1,4 +1,4 @@
-export interface Tenant {
+    export interface Tenant {
     ID: string;
     CompanyName: string;
     Email: string;

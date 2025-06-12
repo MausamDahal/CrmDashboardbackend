@@ -53,4 +53,18 @@ export class SubscriptionController {
             res.status(400).json({ error: err.message });
         }
     }
+    static async updateSubscription(req: Request, res: Response): Promise<void> {
+        const subdomain = req.tenant?.Subdomain;
+        const tenantId = req.tenant?.ID;
+        if (!subdomain || !tenantId) {
+            res.status(401).json({ error: "Unauthorized" });
+            return;
+        }
+        try {
+            await useCase.updateSubscription(subdomain, tenantId, req.body);
+            res.status(200).json({ message: "Subscription updated" });
+        } catch (err: any) {
+            res.status(400).json({ error: err.message });
+        }
+    }
 }

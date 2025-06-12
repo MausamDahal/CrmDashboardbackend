@@ -8,6 +8,7 @@ export class DynamoSubscriptionRepository implements SubscriptionRepository {
         return `NestCRM-Subscription`;
     }
 
+    
     async save(subdomain: string, subscription: Subscription): Promise<void> {
         const client = await initDynamoDB();
         await client.send(
@@ -63,4 +64,7 @@ export class DynamoSubscriptionRepository implements SubscriptionRepository {
         );
         return result.Items?.[0] as Subscription || null;
     }
+    async updateFields(subdomain: string, id: string, updateFields: Partial<Subscription>): Promise<void> {
+        
+    }  
 }
