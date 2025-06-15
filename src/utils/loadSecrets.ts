@@ -5,7 +5,7 @@ import {
 import { AIPredictionRoutes } from "../interfaces/routes/AIPredictionRoutes";
   
   const secretName = "NestCRM/Tenant-Dashboard";
-  const region = "us-east-2";
+  const region = "us-east-1";
 
 let isInitialized = false;
 

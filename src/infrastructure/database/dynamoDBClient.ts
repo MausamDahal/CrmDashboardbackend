@@ -10,6 +10,7 @@ export async function initDynamoDB(): Promise<DynamoDBDocumentClient> {
 
     await loadSecrets();
 
+    
     const client = new DynamoDBClient({
         region: process.env.AWS_REGION,
         credentials: {
