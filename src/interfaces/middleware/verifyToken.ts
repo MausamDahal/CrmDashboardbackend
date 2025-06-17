@@ -15,6 +15,12 @@ export const verifyToken = async (
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
+        // Skip subdomain check for localhost
+        if (req.hostname === 'localhost' || req.hostname === '127.0.0.1') {
+            req.user = decoded;
+            return next();
+        }
+
         const subdomainFromToken = decoded.subdomain;
         const subdomainFromRequest = req.hostname.split('.')[0];
 

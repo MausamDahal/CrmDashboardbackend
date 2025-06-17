@@ -6,7 +6,15 @@ export async function verifySubdomain(req: any, res: Response, next: NextFunctio
         const host = req.hostname;
         const mainDomain = "nestcrm.com.au";
 
-        if (host === mainDomain || host === `www.${mainDomain}`) {
+        // Allow localhost and IP addresses for development
+        if (host === "localhost" || host === "127.0.0.1" || host === mainDomain || host === `www.${mainDomain}`) {
+            // For local development, use the test tenant
+            if (host === "localhost" || host === "127.0.0.1") {
+                const testTenant = await getTenantBySubdomain("test");
+                if (testTenant) {
+                    req.tenant = testTenant;
+                }
+            }
             return next();
         }
 

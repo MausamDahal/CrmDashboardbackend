@@ -1,9 +1,16 @@
 {
   "name": "ec2-test-backend",
   "version": "1.0.0",
-  "main": "server.ts",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "setup-dynamodb": "ts-node src/scripts/setup-dynamodb.ts",
+    "add-test-tenant": "ts-node src/scripts/add-test-tenant.ts",
+    "delete-table": "ts-node src/scripts/delete-table.ts",
+    "setup-payment-table": "ts-node src/scripts/setup-payment-table.ts",
+    "add-test-payment": "ts-node src/scripts/add-test-payment.ts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.772.0",
