@@ -33,7 +33,7 @@ async function setupPaymentTable() {
         const command = new CreateTableCommand({
             TableName: tableName,
             KeySchema: [
-                { AttributeName: 'id', KeyType: 'HASH' }  // Partition key
+                { AttributeName: 'id', KeyType: 'HASH' }  
             ],
             AttributeDefinitions: [
                 { AttributeName: 'id', AttributeType: 'S' }
@@ -52,5 +52,5 @@ async function setupPaymentTable() {
     }
 }
 
-// Run the function
+
 setupPaymentTable(); 

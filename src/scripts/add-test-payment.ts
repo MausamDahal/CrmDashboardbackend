@@ -45,5 +45,5 @@ async function addTestPayment() {
     }
 }
 
-// Run the function
+
 addTestPayment(); 
