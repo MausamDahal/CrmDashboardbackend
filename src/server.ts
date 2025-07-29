@@ -34,13 +34,14 @@ const app = express();
 
 const allowedOrigins: (string | RegExp)[] = [
     /\.nestcrm\.com\.au$/,
-    'https://nestcrm.com.au',
-    'https://www.nestcrm.com.au',
-    'https://*.nestcrm.com.au',
+    'https://mausamcrm.site',
+    'https://www.mausamcrm.site',
+    /^https:\/\/([a-zA-Z0-9-]+)\.mausamcrm\.site$/,
     'http://localhost:3000',
     'http://localhost:5173',
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:5173'
+    'http://127.0.0.1:4000',
+    'http://127.0.0.1:5173',
+    'http://localhost:8080'
 ];
 
 const corsOptions: CorsOptionsDelegate = (req, callback) => {
@@ -77,7 +78,7 @@ app.get('/api/login', (req: Request, res: Response) => {
     );
 
     res.setHeader("Set-Cookie", [
-        `token=${token}; Path=/; HttpOnly; SameSite=None; Secure`,
+        `token=${token}; Path=/; HttpOnly; SameSite=None; Secure; Domain=.mausamcrm.site`,
     ]);
     
     res.status(200).json({ message: 'Logged in successfully' });
@@ -96,7 +97,7 @@ app.post('/api/login', (req: Request, res: Response) => {
     );
 
     res.setHeader("Set-Cookie", [
-        `token=${token}; Path=/; HttpOnly; SameSite=None; Secure`,
+        `token=${token}; Path=/; HttpOnly; SameSite=None; Secure; Domain=.mausamcrm.site`,
     ]);
     
     res.status(200).json({ message: 'Logged in successfully' });
@@ -105,7 +106,7 @@ app.post('/api/login', (req: Request, res: Response) => {
 // Logout route
 app.post('/api/logout', (req: Request, res: Response) => {
     res.setHeader("Set-Cookie", [
-        `token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure; SameSite=None`,
+        `token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure; SameSite=None; Domain=.mausamcrm.site`,
     ]);
     res.status(200).json({ message: 'Logged out successfully' });
 });
@@ -127,9 +128,9 @@ app.get('/api/status', verifyToken, (_req: Request, res: Response) => {
 });
 
 // 404 handler
-app.use((_req: Request, res: Response) => {
-    res.status(404).json({ error: 'Not Found' });
-});
+// app.use((_req: Request, res: Response) => {
+//     res.status(404).json({ error: 'Not Found' });
+// });
 
 app.listen(3000, '0.0.0.0', () => {
     console.log(' Backend API server running on port 3000');

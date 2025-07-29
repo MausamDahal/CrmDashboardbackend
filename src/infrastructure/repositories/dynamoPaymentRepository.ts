@@ -14,7 +14,7 @@ export interface SubscriptionRepository {
 }
 export class DynamoPaymentRepository implements PaymentRepository {
     getTableName(subdomain: string): string {
-        return `NestCRM-${subdomain}-Payment`;
+        return `CRM-${subdomain}-Payment`;
     }
 
     async savePayment(subdomain: string, payment: Payment): Promise<void> {

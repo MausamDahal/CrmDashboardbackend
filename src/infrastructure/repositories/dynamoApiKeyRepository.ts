@@ -5,7 +5,7 @@ import { ApiKeyRecord } from "../../domain/types/apiKey";
 
 export class DynamoApiKeyRepository implements ApiKeyRepository {
     getTableName(subdomain: string): string {
-        return `NestCRM-${subdomain}-ApiKey`;
+        return `CRM-${subdomain}-ApiKey`;
     }
 
     async save(subdomain: string, record: ApiKeyRecord): Promise<void> {

@@ -5,7 +5,7 @@ import { Prediction } from "../../domain/types/prediction";
 
 export class DynamoPredictionRepository implements PredictionRepository {
     getTableName(subdomain: string): string {
-        return `NestCRM-${subdomain}-Prediction`;
+        return `CRM-${subdomain}-Prediction`;
     }
 
     async savePrediction(subdomain: string, prediction: Prediction): Promise<void> {

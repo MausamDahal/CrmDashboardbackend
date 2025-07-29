@@ -6,7 +6,7 @@ import { RiskAlert } from "../../domain/types/riskAlert";
 
 export class DynamoRiskAlertRepository implements RiskAlertRepository {
     getTableName(subdomain: string): string {
-        return `NestCRM-${subdomain}-RiskAlert`;
+        return `CRM-${subdomain}-RiskAlert`;
     }
 
     async saveAlert(subdomain: string, alert: RiskAlert): Promise<void> {

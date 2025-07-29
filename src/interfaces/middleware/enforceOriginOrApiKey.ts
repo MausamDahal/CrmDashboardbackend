@@ -14,7 +14,7 @@ export async function enforceOriginOrApiKey(req: any, res: Response, next: NextF
         const token = req.cookies?.token;
         const apiKey = (req.headers['x-api-key'] || req.headers['authorization']?.replace(/^Bearer\s+/i, '') || '').trim();
 
-        const expectedOriginPrefix = `https://${subdomain}.nestcrm.com.au`;
+        const expectedOriginPrefix = `https://${subdomain}mausamcrm.site`;
         const fromFrontend = origin.startsWith(expectedOriginPrefix);
 
         // Case 1: Frontend request with JWT token
