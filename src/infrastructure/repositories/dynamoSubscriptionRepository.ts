@@ -5,7 +5,7 @@ import { Subscription } from "../../domain/types/subscription";
 
 export class DynamoSubscriptionRepository implements SubscriptionRepository {
     getTableName(subdomain: string = "NestCRM-Subscription"): string {
-        return `NestCRM-Subscription`;
+        return NestCRM-Subscription;
     }
 
     async save(subdomain: string, subscription: Subscription): Promise<void> {
@@ -55,9 +55,9 @@ export class DynamoSubscriptionRepository implements SubscriptionRepository {
         // Add other fields to update
         for (const key in updateFields) {
             if (key !== 'UpdatedAt' && updateFields[key as keyof Partial<Subscription>] !== undefined) {
-                const nameKey = `#field${idx}`;
-                const valueKey = `:val${idx}`;
-                updateExp.push(`${nameKey} = ${valueKey}`);
+                const nameKey = #field${idx};
+                const valueKey = :val${idx};
+                updateExp.push(${nameKey} = ${valueKey});
                 attrNames[nameKey] = key;
                 attrValues[valueKey] = updateFields[key as keyof Partial<Subscription>];
                 idx++;
@@ -88,7 +88,7 @@ export class DynamoSubscriptionRepository implements SubscriptionRepository {
                 ScanIndexForward: false, // Get the most recent subscriptions first
             })
         );
-
+        console.log(result)
         // Filter out canceled subscriptions unless they're the only ones
         const subscriptions = (result.Items as Subscription[]) || [];
         const activeSubscriptions = subscriptions.filter(sub => 

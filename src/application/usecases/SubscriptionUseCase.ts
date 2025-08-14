@@ -29,10 +29,6 @@ export class SubscriptionUseCase {
         const trialEnd = new Date(activeSub.CurrentPeriodStart).getTime() + 
                         activeSub.TrialDays * MS_PER_DAY;
 
-        // A subscription is valid if:
-        // 1. It's active or trialing and not canceled
-        // 2. It's canceled but not at period end (still valid until end of period)
-        // 3. It's canceled but the canceled date is in the future
         const isSubscribed = 
             this.isSubscriptionActive(activeSub, now) || 
             (activeSub.Status === "canceled" && !activeSub.CancelAtPeriodEnd) ||
@@ -57,12 +53,12 @@ export class SubscriptionUseCase {
         const existing = await this.repo.getByTenantId(subdomain, tenantId);
 
         if (existing.length > 0) {
-            const stripeSubId = payload.StripeSubscriptionID;
+            const subscriptionId = existing[0].ID; 
             const newStatus = payload.Status;
-            if (!stripeSubId || !newStatus) {
-                throw new Error("Missing StripeSubscriptionID or Status for update");
+            if (!subscriptionId || !newStatus) {
+                throw new Error("Missing Subscription ID or Status for update");
             }
-            await this.repo.updateStatus(subdomain, tenantId, newStatus);
+            await this.repo.updateStatus(subdomain, subscriptionId, newStatus);
         } else {
             const newSubscription: Subscription = {
                 ID: crypto.randomUUID(),
@@ -79,9 +75,9 @@ export class SubscriptionUseCase {
     }
 
     async switchSubscription(
-        subdomain: string, 
-        tenantId: string, 
-        newPlanId: string, 
+        subdomain: string,
+        tenantId: string,
+        newPlanId: string,
         immediate: boolean = false
     ): Promise<void> {
         const subscriptions = await this.repo.getByTenantId(subdomain, tenantId);
@@ -96,7 +92,7 @@ export class SubscriptionUseCase {
         }
 
         const now = new Date().toISOString();
-        
+
         if (immediate) {
             // For immediate switch, create new subscription first
             const newSubscription: Subscription = {
@@ -117,7 +113,7 @@ export class SubscriptionUseCase {
             await this.repo.save(subdomain, newSubscription);
 
             // Then mark old subscription as canceled
-            await this.repo.updateFields(subdomain, tenantId, {
+            await this.repo.updateFields(subdomain, currentSub.ID, {
                 Status: "canceled",
                 CanceledAt: now,
                 UpdatedAt: now
@@ -131,6 +127,7 @@ export class SubscriptionUseCase {
             }
         } else {
             // Schedule the switch for the end of the current period
+
             await this.repo.updateFields(subdomain, tenantId, {
                 CancelAtPeriodEnd: true,
                 UpdatedAt: now

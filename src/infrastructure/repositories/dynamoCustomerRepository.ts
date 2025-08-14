@@ -5,7 +5,7 @@ import { CustomerRepository } from "../../domain/repositories/customerRepository
 
 export class DynamoCustomerRepository implements CustomerRepository {
     getTableName(subdomain: string): string {
-        return `NestCRM-${subdomain}-Customer`;
+        return `CRM-${subdomain}-Customer`;
     }
 
     async saveCustomer(subdomain: string, customer: Customer): Promise<void> {

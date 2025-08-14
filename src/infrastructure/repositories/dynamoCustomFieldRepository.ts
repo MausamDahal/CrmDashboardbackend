@@ -10,7 +10,7 @@ export class DynamoCustomFieldRepository implements CustomFieldRepository {
         category: FieldCategory,
     ): Promise<void> {
         const client = await initDynamoDB();
-        const tableName = `NestCRM-${tenantId}-CustomFields`;
+        const tableName = `CRM-${tenantId}-CustomFields`;
         const pk = `CustomFieldSet#${category}`;
 
         await client.send(new PutCommand({

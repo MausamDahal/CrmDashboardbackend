@@ -5,7 +5,7 @@ import { ApiKeyRecord } from "../../domain/types/apiKey";
 
 export class DynamoApiKeyRepository implements ApiKeyRepository {
     getTableName(subdomain: string): string {
-        return `CRM-${subdomain}-ApiKey`;
+        return CRM-${subdomain}-ApiKey;
     }
 
     async save(subdomain: string, record: ApiKeyRecord): Promise<void> {
@@ -57,15 +57,14 @@ export class DynamoApiKeyRepository implements ApiKeyRepository {
 
     async getByHashedKey(subdomain: string, hashedKey: string): Promise<ApiKeyRecord | null> {
         const client = await initDynamoDB();
-        const result = await client.send(
-            new ScanCommand({
-                TableName: this.getTableName(subdomain),
-                FilterExpression: "hashedKey = :hashedKey",
-                ExpressionAttributeValues: {
-                    ":hashedKey": hashedKey,
-                },
-            })
-        );
-        return result.Items?.[0] as ApiKeyRecord || null;
-    }
+        const tableName = this.getTableName(subdomain);   // only once
+      
+        const result = await client.send(new ScanCommand({
+          TableName: tableName,
+          FilterExpression: "hashedKey = :hashedKey",
+          ExpressionAttributeValues: { ":hashedKey": hashedKey },
+        }));
+        return (result.Items?.[0] as ApiKeyRecord) || null;
+      }
+      
 }

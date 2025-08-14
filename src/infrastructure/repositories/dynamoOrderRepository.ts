@@ -5,7 +5,7 @@ import { Order } from "../../domain/types/order";
 
 export class DynamoOrderRepository implements OrderRepository {
     getTableName(subdomain: string): string {
-        return `NestCRM-${subdomain}-Order`;
+        return `CRM-${subdomain}-Order`;
     }
 
     async saveOrder(subdomain: string, order: Order): Promise<void> {

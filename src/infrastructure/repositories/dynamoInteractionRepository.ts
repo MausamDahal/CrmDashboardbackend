@@ -5,7 +5,7 @@ import { InteractionRepository } from "../../domain/repositories/interactionRepo
 
 export class DynamoInteractionRepository implements InteractionRepository {
     getTableName(subdomain: string): string {
-        return `NestCRM-${subdomain}-Interaction`;
+        return `CRM-${subdomain}-Interaction`;
     }
 
     async saveInteraction(subdomain: string, interaction: Interaction): Promise<void> {

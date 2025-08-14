@@ -4,10 +4,10 @@ import { getTenantBySubdomain } from "../../infrastructure/repositories/dynamoTe
 export async function verifySubdomain(req: any, res: Response, next: NextFunction): Promise<any> {
     try {
         const host = req.hostname;
-        const mainDomain = "nestcrm.com.au";
+        const mainDomain = "mausamcrm.site";
 
         // Allow localhost and IP addresses for development
-        if (host === "localhost" || host === "127.0.0.1" || host === mainDomain || host === `www.${mainDomain}`) {
+        if (host === "localhost" || host === "127.0.0.1" || host === mainDomain || host === www.${mainDomain}) {
             // For local development, use the test tenant
             if (host === "localhost" || host === "127.0.0.1") {
                 const testTenant = await getTenantBySubdomain("test");
@@ -18,9 +18,9 @@ export async function verifySubdomain(req: any, res: Response, next: NextFunctio
             return next();
         }
 
-        const subdomain = host.replace(`.${mainDomain}`, '');
+        const subdomain = host.replace(.${mainDomain}, '');
         const tenant = await getTenantBySubdomain(subdomain);
-
+        console.log(tenant)
         if (!tenant) {
             return res.status(404).json({ error: "Invalid tenant or subdomain" });
         }
@@ -28,6 +28,6 @@ export async function verifySubdomain(req: any, res: Response, next: NextFunctio
         req.tenant = tenant;
         next();
     } catch (err) {
-        next(err); // deixa o express lidar com o erro (e o express-async-errors também)
+        next(err); 
     }
 }

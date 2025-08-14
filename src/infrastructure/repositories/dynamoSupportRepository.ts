@@ -5,7 +5,7 @@ import { SupportRepository } from "../../domain/repositories/supportRepository";
 
 export class DynamoSupportRepository implements SupportRepository {
     getTableName(subdomain: string): string {
-        return `NestCRM-${subdomain}-Support`;
+        return `CRM-${subdomain}-Support`;
     }
 
     async saveSupport(subdomain: string, support: Support): Promise<void> {
