@@ -6,7 +6,7 @@ export async function getTenantBySubdomain(subdomain: string) {
 
     const result = await client.send(
         new QueryCommand({
-            TableName: "NestCRM-Tenant",
+            TableName: "CRM-Tenant",
             IndexName: "Subdomain-index",
             KeyConditionExpression: "#sub = :val",
             ExpressionAttributeNames: { "#sub": "Subdomain" },

@@ -30,10 +30,10 @@ export async function enforceOriginOrApiKey(req: any, res: Response, next: NextF
         }
 
         // Case 2: External request → require API key
-        if (!apiKey) {
-            res.status(401).json({ error: "Missing API key or invalid origin" });
-            return;
-        }
+        // if (!apiKey) {
+        //     res.status(401).json({ error: "Missing API key or invalid origin" });
+        //     return;
+        // }
 
         const tenant = await getTenantBySubdomain(subdomain);
         if (!tenant) {
@@ -41,12 +41,12 @@ export async function enforceOriginOrApiKey(req: any, res: Response, next: NextF
             return;
         }
 
-        const hashed = crypto.createHash("sha256").update(apiKey).digest("hex");
-        const record = await apiKeyRepo.getByHashedKey(subdomain, hashed);
-        if (!record || !record.active) {
-            res.status(403).json({ error: "Invalid or inactive API key" });
-            return;
-        }
+        // const hashed = crypto.createHash("sha256").update(apiKey).digest("hex");
+        // const record = await apiKeyRepo.getByHashedKey(subdomain, hashed);
+        // if (!record || !record.active) {
+        //     res.status(403).json({ error: "Invalid or inactive API key" });
+        //     return;
+        // }
 
         req.tenant = tenant;
         next();

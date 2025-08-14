@@ -4,6 +4,7 @@ export interface Subscription {
     StripeCustomerID: string;
     StripeSubscriptionID: string;
     PlanID: string;
+    plan: string;
     Currency: string;
     Interval: string;
     Amount: number;

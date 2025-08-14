@@ -88,7 +88,7 @@ export class DynamoSubscriptionRepository implements SubscriptionRepository {
                 ScanIndexForward: false, // Get the most recent subscriptions first
             })
         );
-
+        console.log(result)
         // Filter out canceled subscriptions unless they're the only ones
         const subscriptions = (result.Items as Subscription[]) || [];
         const activeSubscriptions = subscriptions.filter(sub => 

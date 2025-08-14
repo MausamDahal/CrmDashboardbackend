@@ -41,7 +41,7 @@ export class SubscriptionController {
         
         if (!subdomain || !tenantId) {
             res.status(401).json({ 
-                valid: false, 
+                valid: false,
                 error: "Unauthorized - Missing tenant information" 
             });
             return;
