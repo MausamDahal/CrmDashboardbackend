@@ -28,7 +28,7 @@ async function createTestTenant() {
             Email: "test@example.com",
             Password: "test123", 
             Subdomain: "test",
-            Domain: "test.nestcrm.com.au",
+            Domain: "testmausamcrm.site",
             Status: "active",
             CreatedAt: new Date().toISOString()
         };

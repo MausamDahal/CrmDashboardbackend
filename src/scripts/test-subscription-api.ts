@@ -11,7 +11,7 @@ async function testSubscriptionAPI() {
         const baseUrl = process.env.API_URL || 'http://localhost:3000';
         const apiKey = process.env.API_KEY;
         const subdomain = 'test';
-        const hostname = 'test.nestcrm.com.au';
+        const hostname = 'testmausamcrm.site';
 
         if (!apiKey) {
             throw new Error('API_KEY must be set in .env file');
